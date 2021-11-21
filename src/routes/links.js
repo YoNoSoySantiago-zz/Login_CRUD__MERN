@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router(); //Facilita la creacion de rutas
 
 const pool = require('../database');
+const { isLoggedIn } = require('../lib/auth');
 
-router.get('/add', (req, res) => {
+router.get('/add', isLoggedIn, (req, res) => {
     res.render('links/add');
 });
 
@@ -24,14 +25,14 @@ router.get('/', async (req, res) => {
     res.render('links/list',{links});
 });
 
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', isLoggedIn,async (req, res) => {
     const {id} = req.params;
     await pool.query('DELETE FROM links WHERE ID = ?', [id]);
     req.flash('success', 'Link deleted successfully');
     res.redirect('/links');
 });
 
-router.get('/edit/:id',async (req, res) => {
+router.get('/edit/:id',isLoggedIn,async (req, res) => {
     const {id} = req.params;
     
     const links = await pool.query('SELECT * FROM links WHERE ID = ?', [id]);
