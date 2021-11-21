@@ -1,11 +1,11 @@
-CREATE DATABASE database_links;
+CREATE DATABASE database_links_test;
 
-USE database_links;
+USE database_links_test;
 
 DROP TABLE IF EXISTS links;
 DROP TABLE IF EXISTS users;
 
-CREATE TABLE users ( 
+CREATE TABLE users (
     username VARCHAR(60) NOT NULL,
     fullname VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,

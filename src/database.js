@@ -1,8 +1,10 @@
 const mysql = require('mysql');
 const {promisify} = require('util');
 const {database} = require('./keys');
+const {testingDatabase} = require('./keys');
 
-const pool = mysql.createPool(database);
+const {NODE_ENV} = process.env;
+const pool = NODE_ENV=== 'test' ? mysql.createPool(testingDatabase) : mysql.createPool(database);
 
 pool.getConnection((err, connection) => {
     if(err) {
