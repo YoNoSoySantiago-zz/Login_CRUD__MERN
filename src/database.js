@@ -1,7 +1,8 @@
-const mysql = require('mysql');
-const {promisify} = require('util');
-const {database} = require('./keys');
-const {testingDatabase} = require('./keys');
+import mysql from 'mysql';
+import {promisify} from 'util';
+import config from "./config";
+
+const {database} = config;
 
 const {NODE_ENV} = process.env;
 const pool = NODE_ENV=== 'test' ? mysql.createPool(testingDatabase) : mysql.createPool(database);
