@@ -1,12 +1,14 @@
-const express = require('express');
-const router = express.Router(); //Facilita la creacion de rutas
+import { Router } from "express";
+import auth from "./auth.routes";
+import index from "./index.routes";
+import links from "./links.routes";
+import user from "./user.routes";
 
-router.get('/', (req, res) => {
-    console.log('index');
-    res.render('index.hbs');
-});
+const router = Router();
 
-router.get('/about', (req, res) => {
-    res.render('about');
-});
-module.exports = router;
+router.use(index);
+router.use(auth);
+router.use(user);
+router.use("/links", links);
+
+export default router;

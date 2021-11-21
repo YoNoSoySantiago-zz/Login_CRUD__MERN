@@ -1,7 +1,7 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const helpers = require('../lib/helpers');
-const pool = require('../database')
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
+import pool from "../database.js";
+import * as helpers from "./helpers.js";
 
 passport.use('local.signup', new LocalStrategy(
     {
@@ -60,5 +60,9 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (username, done) => {
     const rows = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
-    done(null, rows[0]);
+    if(rows.length > 0){
+        done(null, rows[0]);
+    }else{
+        done(null, false);
+    }
 });

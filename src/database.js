@@ -1,6 +1,8 @@
-const mysql = require('mysql');
-const {promisify} = require('util');
-const {database} = require('./keys');
+import mysql from 'mysql';
+import {promisify} from 'util';
+import config from "./config";
+
+const {database} = config;
 
 const pool = mysql.createPool(database);
 
