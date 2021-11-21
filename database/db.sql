@@ -2,16 +2,16 @@ CREATE DATABASE database_links;
 
 USE database_links;
 
+DROP TABLE IF EXISTS links;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE users (
-    id INT(11) NOT NULL,
-    link VARCHAR(40) NOT NULL,
-    passport VARCHAR(40) NOT NULL,
-    full_name VARCHAR(40) NOT NULL,
-    PRIMARY KEY (id)
+    username VARCHAR(60) NOT NULL,
+    fullname VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    PRIMARY KEY (username)
 );
 
-ALTER TABLE users
-    MODIFY id INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 DESCRIBE users;
 
@@ -22,8 +22,8 @@ CREATE TABLE links (
     description TEXT,
     created_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
-    user_id INT(11),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    user_id VARCHAR(60),
+    FOREIGN KEY (user_id) REFERENCES users(username)
 );
 
 ALTER TABLE links
