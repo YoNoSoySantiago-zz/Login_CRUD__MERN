@@ -6,21 +6,24 @@ export const renderAddLink = (req, res) => {
 
 export const addLink = async (req, res) => {
   const { title, url, description } = req.body;
+  console.log(req.body);
   const newLink = {
     title,
     url,
     description,
-    user_id: req.user.id,
+    user_id: req.user.username
   };
+  
+  console.log(newLink);
   await pool.query("INSERT INTO links set ?", [newLink]);
   req.flash("success", "Link Saved Successfully");
   res.redirect("/links");
 };
 
 export const renderLinks = async (req, res) => {
-  const links = await pool.query("SELECT * FROM links WHERE user_id = ?", [
-    req.user.id,
-  ]);
+  const links = await pool.query("SELECT * FROM links WHERE user_id = ?", [req.user.username]);
+  console.log("SELECT * FROM links WHERE user_id = ?", [req.user.username]);
+  console.log(links);
   res.render("links/list", { links });
 };
 
