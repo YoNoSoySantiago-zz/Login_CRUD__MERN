@@ -3,6 +3,7 @@ import {promisify} from 'util';
 import config from "./config";
 
 const {database} = config;
+const {testingDatabase} = config;
 
 const {NODE_ENV} = process.env;
 const pool = NODE_ENV=== 'test' ? mysql.createPool(testingDatabase) : mysql.createPool(database);
