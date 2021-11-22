@@ -7,13 +7,14 @@ const databaseCleaner = new DatabaseCleaner('mysql');
 
 beforeAll( (done) => {
     databaseCleaner.clean(pool, () => {
-        console.log('cleaned');
+        //console.log('cleaned');
     });
     done();
 });
 
 afterAll( (done) => {
     pool.end();
+    
     done();
 });
 
@@ -71,5 +72,37 @@ describe('POST/validRoutes', () => {
             });
         expect(response.status).toBe(302);
         expect(response.header.location).toBe('/profile');
+    });
+});
+
+describe('POST/invalidRoutes', () => {
+
+    test('should return 302 and redirect to the signup page', async () => {
+        await request(app).post('/signup').send(
+            {
+                fullname: 'Santiago Hurtado Solis',
+                username: 'YoNoSoySantiago',
+                password: '12345678',
+                password2: '12345678'
+            });
+        const response = await request(app).post('/signup').send(
+            {
+                fullname: 'Santiago Hurtado Solis',
+                username: 'YoNoSoySantiago',
+                password: '12345678',
+                password2: '12345678'
+            });
+        expect(response.status).toBe(302);
+        expect(response.header.location).toBe('/signup');
+    });
+
+    test('should return 302 and redirect to the signin page', async () => {
+        const response = await request(app).post('/signin').send(
+            {
+                username: 'YoSiSoySantiago',
+                password: '87654321'
+            });
+        expect(response.status).toBe(302);
+        expect(response.header.location).toBe('/signin');
     });
 });

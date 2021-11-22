@@ -34,7 +34,6 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false})); //Para que el servidor entienda los datos que llegan por post
 app.use(express.json());
 
-// app.use(methodOverride('_method')); //Para que el formulario pueda enviar los datos con el metodo PUT o DELETE
 app.use(session({
      secret: 'mysecretapp',
      resave: false,
@@ -44,6 +43,7 @@ app.use(session({
 
  app.use(passport.initialize());
  app.use(passport.session());
+ 
 //Global Variables
 app.use((req,res,next) => {
     app.locals.success = req.flash('success');

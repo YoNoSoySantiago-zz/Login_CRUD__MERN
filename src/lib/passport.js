@@ -10,7 +10,7 @@ passport.use('local.signup', new LocalStrategy(
         passwordField: 'password2',
         passReqToCallback: true
     }, async (req, username, password, done) => {
-        console.log(req.body);
+        
         const {fullname} = req.body;
         const newUser = {
             username,
@@ -36,17 +36,17 @@ passport.use('local.signin', new LocalStrategy(
         const rows = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
         const user = rows[0];
         if (!user) {
-            console.log('User not found');
+            
             return done(null, false, req.flash('warning', 'User not found'));
             
         } else {
             const match = await helpers.matchPassword(password, user.password);
             if (match) {
-                console.log('User found');
+                
                 return done(null, user, req.flash('success', 'Welcome'));
                 
             } else {
-                console.log('Password incorrect');
+               
                 return done(null, false, req.flash('warning', 'Password incorrect'));
                 
             }

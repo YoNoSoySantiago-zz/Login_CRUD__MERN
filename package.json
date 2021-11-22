@@ -10,7 +10,7 @@
     "clean": "rimraf dist",
     "copyfiles": "ncp ./src/views ./dist/views && ncp ./src/public ./dist/public",
     "build": "npm run clean && npm run compile && npm run copyfiles",
-    "test": "cross-env NODE_ENV=test jest"
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
